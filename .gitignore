@@ -1,0 +1,7 @@
+*.com
+*.class
+*.settings
+.project
+.classpath
+target
+*.log*
