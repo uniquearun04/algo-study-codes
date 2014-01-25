@@ -18,15 +18,17 @@ public class GeneralUtil {
 	}
 	
 	public static void swapEqLenSubArrays(String[] A, int startIndexFirstSubArray, int endIndexFirstSubArray, int startIndexSecondSubArray, int endIndexSecondSubArray){
-		int lenFirstSubArray = endIndexFirstSubArray - startIndexFirstSubArray + 1;
+		//do not swap subarrays of length 1
+		if(endIndexFirstSubArray == startIndexFirstSubArray){
+			return;
+		}
 		
-		for(int i = 0; i < lenFirstSubArray; i ++){
-			swapOneVal(A, startIndexFirstSubArray + i, startIndexSecondSubArray + i);
+		for(int i = 0; i < endIndexFirstSubArray - startIndexFirstSubArray + 1; i ++){
+			swap(A, startIndexFirstSubArray + i, startIndexSecondSubArray + i);
 		}
 	}
-
 		
-	public static void swapOneVal(String [] A, int i, int j){
+	public static void swap(String [] A, int i, int j){
 		String tmp = A[i];
 		A[i] = A[j];
 		A[j] = tmp;
