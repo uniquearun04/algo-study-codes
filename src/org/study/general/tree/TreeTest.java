@@ -13,8 +13,15 @@ public class TreeTest {
 		Node root = bst();
 		BST bst = new BST();
 		bst.setRoot(root);
-		bst.delete(30);
+		System.out.println("old tree: "+root);
+
+		bst.delete(7);
 		System.out.println("New tree: "+root);
+		
+//		Node n1 = new Node(15);
+//		System.out.println("Node: "+n1);
+//		n1 = null;
+//		System.out.println("Node: "+n1);
 	}
 	public static void findTestBST(){
 		Node root = bst();

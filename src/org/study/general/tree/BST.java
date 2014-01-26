@@ -93,7 +93,7 @@ public class BST {
 			} else {
 				return false;
 			}
-		} else {
+		} else {// val == root.getVal();
 			left = root.getLeft();
 			right = root.getRight();
 			
@@ -101,19 +101,24 @@ public class BST {
 				Node predecessor = findPredecessor(root);
 				int newVal = predecessor.getVal();
 				root.setVal(newVal);
-				delete(left, newVal);
+				return delete(left, newVal);
 			} else if(left != null){
 				Node trash = root;
 				root = root.getLeft();
 				trash = null;
+				System.out.println(root);
+				return true;
 			} else if(right != null){
 				Node trash = root;
 				root = root.getRight();
 				trash = null;
-			} else {
+				System.out.println(root);
+				return true;
+			} else { // left == null && right == null
 				root = null;
+				System.out.println(root);
+				return true;
 			}
-			return true;
 		}
 		
 	}
