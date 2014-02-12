@@ -3,22 +3,23 @@ package com.study.coursera.algo.assignments.ass1;
 public class Percolation {
 
 	WeightedQuickUnionUF wquUF = null;
+	WeightedQuickUnionUF wquUF2 = null;
 	boolean[] state;
 	int valN = 0;
-	
-	
 	
 	// create N-by-N grid, with all sites blocked
 	public Percolation(int N) {
 		valN = N;
 		int gridLen = N * N + 2;
 		wquUF = new WeightedQuickUnionUF(gridLen);
+		wquUF2 = new WeightedQuickUnionUF(gridLen - 1);
+
 		state = new boolean[gridLen];
 		
 		for(int i = 0; i < gridLen; i++){
 				state[i] = false;
 		}
-		state[0] = true;
+		state[0] = state[valN - 1] = true;
 	}
 
 	//TODO open last element
@@ -36,6 +37,7 @@ public class Percolation {
 				int upperIndex = oneDArrayIndex(i - 1, j, valN);
 				if(state[upperIndex]){
 					wquUF.union(curIndex, upperIndex);
+					wquUF2.union(curIndex, upperIndex);
 				}
 			}
 			//left
@@ -43,6 +45,7 @@ public class Percolation {
 				int leftIndex = oneDArrayIndex(i, j - 1, valN);
 				if(state[leftIndex]){
 					wquUF.union(curIndex, leftIndex);
+					wquUF2.union(curIndex, leftIndex);
 				}
 			}
 			//lower
@@ -50,6 +53,7 @@ public class Percolation {
 				int lowerIndex = oneDArrayIndex(i + 1, j, valN);
 				if(state[lowerIndex]){
 					wquUF.union(curIndex, lowerIndex);
+					wquUF2.union(curIndex, lowerIndex);
 				}
 			}
 			//right
@@ -57,17 +61,18 @@ public class Percolation {
 				int rightIndex = oneDArrayIndex(i, j + 1, valN);
 				if(state[rightIndex]){
 					wquUF.union(curIndex, rightIndex);
+					wquUF2.union(curIndex, rightIndex);
 				}
 			}
-			if(i == 0 && j >= 0 && j < valN){
-				
+			if(i == 0){
+				wquUF.union(curIndex, 0);
+				wquUF2.union(curIndex, 0);
 			}
 			
-			if( i == valN - 1 && j >= 0 && j < valN){
-				//TODO last row
+			if( i == valN - 1){
+				wquUF.union(curIndex, valN - 1);
 			}
 		}
-		
 		
 	}
 
@@ -84,12 +89,16 @@ public class Percolation {
 		if(i < 0 || j < 0 || i >= valN || j >= valN){
 			throw new IndexOutOfBoundsException();
 		}
+		if(isValidIndex(i, j, valN)){
+			int currIndex = oneDArrayIndex(i, j, valN);
+			return wquUF2.connected(0, currIndex);
+		}
 		return false;
 	}
 
 	// does the system percolate?
 	public boolean percolates() {
-		return false;
+		return wquUF.connected(0, valN-1);
 	}
 	
 	private int oneDArrayIndex(int i, int j, int square2DArrayLen){

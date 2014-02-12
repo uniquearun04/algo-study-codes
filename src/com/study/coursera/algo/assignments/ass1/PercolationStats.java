@@ -1,10 +1,15 @@
 package com.study.coursera.algo.assignments.ass1;
 
+import java.util.Random;
+
+import com.study.coursera.algo.Stopwatch;
+
+
 public class PercolationStats {
 
 	double [] fractionOpenSites;
 	int valN = 0;
-	double mean = 0;
+//	double mean = 0;
 	
 	// perform T independent computational experiments on an N-by-N grid
 	public PercolationStats(int N, int T) {
@@ -19,6 +24,44 @@ public class PercolationStats {
 	// test client, described below
 	public static void main(String[] args) {
 
+		int N = 0;
+		int T = 0;
+		if(args.length != 2){
+			System.out.println("Invalid arguments");
+			return;
+		}
+		try {
+			N = Integer.parseInt(args[0]);
+			T = Integer.parseInt(args[1]);
+		} catch (NumberFormatException e) {
+			System.out.println("Invalid argument.");
+			e.printStackTrace();
+			return;
+		}
+		
+		PercolationStats percolationStats = new PercolationStats(N, T);
+		Random rand = new Random(System.nanoTime());
+		
+		int row = 0;
+		int col = 0;
+		
+		for(int i = 0; i < T; i++){
+			Percolation percolation = new Percolation(N);
+			
+			Stopwatch stopwatch = new Stopwatch();
+			while(!percolation.percolates()){
+				row = rand.nextInt(N);
+				col = rand.nextInt(N);
+				percolation.open(row, col);
+			}
+			double elapsedTime = stopwatch.elapsedTime();
+			percolationStats.fractionOpenSites[i] = elapsedTime;
+		}
+		
+		System.out.println("mean:\t\t\t\t= "+percolationStats.mean());
+		System.out.println("stddev:\t\t\t\t= "+percolationStats.stddev());
+		System.out.println("95% confidence interval:\t= "+percolationStats.confidenceLo()+", "+percolationStats.confidenceHi());
+		
 	}
 	// sample mean of percolation threshold
 	public double mean() {
