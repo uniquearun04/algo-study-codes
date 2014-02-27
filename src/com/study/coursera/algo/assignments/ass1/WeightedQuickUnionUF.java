@@ -1,3 +1,7 @@
+package com.study.coursera.algo.assignments.ass1;
+
+import com.study.coursera.algo.lib.StdIn;
+import com.study.coursera.algo.lib.StdOut;
 /****************************************************************************
  *  Compilation:  javac WeightedQuickUnionUF.java
  *  Execution:  java WeightedQuickUnionUF < input.txt
@@ -6,10 +10,7 @@
  *  Weighted quick-union (without path compression).
  *
  ****************************************************************************/
-package com.study.coursera.algo.assignments.ass1;
 
-import com.study.coursera.algo.lib.StdIn;
-import com.study.coursera.algo.lib.StdOut;
 
 /**
  *  The <tt>WeightedQuickUnionUF</tt> class represents a union-find data structure.
