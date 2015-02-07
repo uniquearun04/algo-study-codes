@@ -78,7 +78,21 @@ public class RSum {
 		}
 		return prod;
 	}
-	
+
+	private static BigInteger factBigInt(BigInteger n){
+		BigInteger prod = BigInteger.ONE;
+		for(BigInteger i = BigInteger.ONE; i.compareTo(n) <= 0; i.add(BigInteger.ONE)){
+			prod.multiply(i);
+		}
+		return prod;
+	}
+	private static BigInteger factBigInt(int n){
+		BigInteger prod = BigInteger.ONE;
+		for(int i = 1; i <= n; i++){
+			prod.multiply(BigInteger.valueOf(i));
+		}
+		return prod;
+	}	
 	
 	public static void test(){
 		
